@@ -1,6 +1,6 @@
 import openpyxl
 
-wb = openpyxl.load_workbook(r'MAGIC analysis-2.xlsx')
+wb = openpyxl.load_workbook(r'MAGICMANDIVIDEOA01.xlsx')
 mNG = []
 mCh = []
 mNG_2 = {}
@@ -30,15 +30,13 @@ for i in wb.sheetnames:
     temp.append(benchMark)
     if 'mNG' in i:
         mNG.append(temp)
-        mNG_2[i[1:4]] = A
+        mNG_2[i[1:3]] = A
     else:
         mCh.append(temp)
-        mCh_2[i[1:4]] = A
+        mCh_2[i[1:3]] = A
 
 res3 = wb.create_sheet('mNG_vs_mCh', 0)
-mCh_res2 = wb.create_sheet('mCh_res2', 0)
 mCh_res1 = wb.create_sheet('mCh_res1', 0)
-mNG_res2 = wb.create_sheet('mNG_res2', 0)
 mNG_res1 = wb.create_sheet('mNG_res1', 0)
 
 A = {}
@@ -83,29 +81,7 @@ wb['mNG_res1'].cell(maxRow+3, 2).value = e1
 wb['mCh_res1'].cell(maxRow+3, 2).value = e2
 wb['mNG_vs_mCh'].cell(maxRow, 1).value = 'Average'
 
-Alpha = ['B','C','D','E','F','G']
-Index = ['02','03','04','05','06','07','08','09','10','11']
-for i in range(len(Index)):
-    wb['mNG_res2'].cell(1, i+2).value = Index[i]
-    wb['mCh_res2'].cell(1, i+2).value = Index[i]
-    wb['mNG_vs_mCh'].cell(29, i+2).value = Index[i]
-for i in range(len(Alpha)):
-    wb['mNG_res2'].cell(i+2, 1).value = Alpha[i]
-    wb['mCh_res2'].cell(i+2, 1).value = Alpha[i]
-    wb['mNG_vs_mCh'].cell(i+30, 1).value = Alpha[i]
 
-for key in mNG_2:
-    row = Alpha.index(key[0])
-    col = int(key[1:])
-    wb['mNG_res2'].cell(row + 2, col).value = mNG_2[key]
-for key in mCh_2:
-    row = Alpha.index(key[0])
-    col = int(key[1:])
-    wb['mCh_res2'].cell(row + 2, col).value = mCh_2[key]
-for key in A:
-    row = Alpha.index(key[0])
-    col = int(key[1:])
-    wb['mNG_vs_mCh'].cell(row + 30, col).value = A[key]
 wb.save('res.xlsx')
 
 
